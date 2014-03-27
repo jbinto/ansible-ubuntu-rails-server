@@ -1,13 +1,13 @@
---
-app_name: bikeways
-password: 3.Y8wVlIe2kNU
-postgresql_root_password: postgresql123
-home_dir: "/home/deploy"
+---
+  app_name: bikeways
+  password: 3.Y8wVlIe2kNU
+  postgresql_root_password: postgresql123
+  home_dir: "/home/deploy"
 
-# Note: probably should be Bitbucket here
-repo: git@github.com:jbinto/bikeways.git
+  # Note: probably should be Bitbucket here
+  repo: git@github.com:jbinto/bikeways.git
 
-project_ruby: 2.1.1
-ruby_url: "http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.1.tar.gz"
+  project_ruby: 2.1.1
+  ruby_url: "http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.1.tar.gz"
 
-ruby_dir: "/home/vagrant"
+  ruby_dir: "/home/vagrant"
