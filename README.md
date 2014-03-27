@@ -6,12 +6,6 @@ http://ihassin.wordpress.com/2013/12/15/from-zero-to-deployment-vagrant-ansible-
 
 Adapted as necessary.
 
-## Issues
-
-* Can't include RSA keys in the git repo. Run `ssh-keygen` and create a deploy keypair, and move it to `devops/templates/deploy_rsa[.pub]`.
-
-* Not sure if the deploy keypair should have a passphrase on it or not? Well, I am sure, *it should*, but whether automation relies on this or not?
-
 ## Usage
 
 Install Vagrant:
@@ -25,9 +19,13 @@ brew install ansible
 vagrant up web
 ```
 
-## OS X March 2014 note
+## Notes
 
-If you get the following error installing ansible:
+* Can't include RSA keys in the git repo. Run `ssh-keygen` and create a deploy keypair, and move it to `devops/templates/deploy_rsa[.pub]`.
+
+* Not sure if the deploy keypair should have a passphrase on it or not? Well, I am sure, *it should*, but whether automation relies on this or not?
+
+* If you get the following error installing ansible on OS X Mavericks:
 
 ```
 # clang: error: unknown argument: '-mno-fused-madd' [-Wunused-command-line-argument-hard-error-in-future]
