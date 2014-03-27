@@ -16,6 +16,9 @@ I'm using 1.5.1 for OS X.
 #
 ```
 brew install ansible
+
+git clone https://github.com/jbinto/ansible-play.git
+cd ansible-play
 vagrant up web
 ```
 
