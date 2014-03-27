@@ -12,4 +12,33 @@ Adapted as necessary.
 
 * Not sure if the deploy keypair should have a passphrase on it or not? Well, I am sure, *it should*, but whether automation relies on this or not?
 
+## Usage
 
+Install Vagrant:
+http://www.vagrantup.com/downloads.html
+
+I'm using 1.5.1 for OS X.
+
+#
+```
+brew install ansible
+vagrant up web
+```
+
+## OS X March 2014 note
+
+If you get the following error installing ansible:
+
+```
+# clang: error: unknown argument: '-mno-fused-madd' [-Wunused-command-line-argument-hard-error-in-future]
+```
+
+Run: 
+
+```
+echo "ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future" >> ~/.zshrc
+. ~/.zshrc
+brew install ansible
+```
+
+See [Stack Overflow question](https://stackoverflow.com/questions/22390655/ansible-installation-clang-error-unknown-argument-mno-fused-madd) for details.
