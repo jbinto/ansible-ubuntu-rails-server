@@ -8,7 +8,7 @@ Adapted as necessary.
 
 ## Issues
 
-* Can't include RSA keys in the git repo. Run `ssh-keygen` and create a deploy keypair.
+* Can't include RSA keys in the git repo. Run `ssh-keygen` and create a deploy keypair, and move it to `devops/templates/deploy_rsa[.pub]`.
 
 * Not sure if the deploy keypair should have a passphrase on it or not? Well, I am sure, *it should*, but whether automation relies on this or not?
 
