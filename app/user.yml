@@ -1,0 +1,31 @@
+---
+- hosts: webservers
+  user: vagrant
+  sudo: True
+  vars_files:
+    - vars.yml
+  vars:
+    deploy: deploy
+    home_dir: /home/deploy
+
+  tasks:
+    - name: create deploy user
+      user: name=deploy comment="deploy user" generate_ssh_key=yes state=present password={{password}} shell=/bin/bash
+
+    - name: copy my ssh key to the user's .ssh directory
+      action: template src=templates/jbinto.pub dest={{home_dir}}/.ssh/authorized_keys mode=0700 owner={{deploy}} group={{deploy}}
+
+    - name: copy known hosts to deploy user (for bitbucket)
+      action: template src=templates/known_hosts dest={{home_dir}}/.ssh/known_hosts owner={{deploy}} group={{deploy}}
+
+    - name: copy deploy private key to VM
+      action: template src=templates/deploy_rsa dest={{home_dir}}/.ssh/deploy_rsa owner={{deploy}} group={{deploy}}
+
+    - name: copy deploy public key to VM
+      action: template src=templates/deploy_rsa.pub dest={{home_dir}}/.ssh/deploy_rsa.pub owner={{deploy}} group={{deploy}} mode=0644
+
+    - name: copy ssh_config so that bitbucket will be accessed using the injected private key
+      action: template src=templates/ssh_config dest={{home_dir}}/.ssh/config owner={{deploy}} group={{deploy}}
+
+    - name: copy sudoers
+      action: template src=templates/sudoers dest=/etc/sudoers
