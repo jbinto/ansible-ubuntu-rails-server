@@ -42,6 +42,7 @@
         - zlib1g-dev
         - htop
         - iftop
+        - python-pycurl # for postgresql playbook, uses apt_pkg
 
     - name: Remove existing ruby
       shell: rm -rf /opt/vagrant_ruby
