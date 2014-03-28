@@ -9,10 +9,14 @@
     home_dir: /home/deploy
 
   tasks:
+
+    #- name: copy my ssh key to the vagrant user .ssh directory
+    #  action: template src=templates/jbinto.pub dest=/home/vagrant/.ssh/authorized_keys mode=0700 owner=vagrant group=vagrant
+
     - name: create deploy user
       user: name=deploy comment="deploy user" generate_ssh_key=yes state=present password={{password}} shell=/bin/bash
 
-    - name: copy my ssh key to the user's .ssh directory
+    - name: copy my ssh key to the deploy user .ssh directory
       action: template src=templates/jbinto.pub dest={{home_dir}}/.ssh/authorized_keys mode=0700 owner={{deploy}} group={{deploy}}
 
     - name: copy known hosts to deploy user (for bitbucket)
@@ -27,5 +31,5 @@
     - name: copy ssh_config so that bitbucket will be accessed using the injected private key
       action: template src=templates/ssh_config dest={{home_dir}}/.ssh/config owner={{deploy}} group={{deploy}}
 
-    - name: copy sudoers
-      action: template src=templates/sudoers dest=/etc/sudoers
+    - name: add deploy to sudoers
+      lineinfile: "dest=/etc/sudoers state=present line='deploy  ALL=(ALL:ALL) ALL'"

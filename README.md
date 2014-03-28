@@ -24,6 +24,10 @@ vagrant up web
 
 ## Notes
 
+* Vagrant ships with insecure defaults. Can log in to the VM with `vagrant/vagrant`, and there is an insecure SSH key. Need to destroy this stuff.
+
+* Despite that, I still can't get `ansible-playbook` to work with the `vagrant` user, because my SSH key isn't moved there.
+
 * Can't include RSA keys in the git repo. Run `ssh-keygen` and create a deploy keypair, and move it to `devops/templates/deploy_rsa[.pub]`.
 
 * Not sure if the deploy keypair should have a passphrase on it or not? Well, I am sure, *it should*, but whether automation relies on this or not?
