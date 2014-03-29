@@ -11,11 +11,10 @@
     - name: Update apt cache
       apt: update_cache=yes
 
-    - name: Upgrade linux packages
-      apt: upgrade=dist
-
-    - name: Install linux packages
-      action: apt pkg={{item}} state=installed
+    - name: Install/upgrade linux packages
+      action: apt pkg={{item}} state=installed update_cache=true
+      async: 3600
+      poll: 15
       with_items:
         - autoconf
         - automake
