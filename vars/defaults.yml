@@ -5,6 +5,9 @@ server_name: minefield.416.bike
 # Used as nginx site name, rails directory, among other things
 app_name: bikeways
 
+# User name to deploy as
+deploy: deploy
+
 # Crypted password for 'deploy' user.
 # To generate, use generate-crypted-password.py
 password: $6$rounds=100000$RzZoQYJWNf78oDy5$tMfWCUcT0RW4OAHS/idG2P9IOElVhoZT3jhKNFmJOj8ZiIy.CCjhyVdEj899JUNUCd3TmTMgDxWyWgmD16liZ.

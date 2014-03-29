@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.playbook = "build-server.yml"
       ansible.inventory_path = "hosts"
       ansible.verbose = "vvvv"
-      ansible.sudo = true
+      #ansible.sudo = true
 
       # https://github.com/mitchellh/vagrant/issues/3096
       ansible.limit = 'all'
