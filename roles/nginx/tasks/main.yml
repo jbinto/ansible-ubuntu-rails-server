@@ -15,5 +15,5 @@
 - name: Enable the app
   file: src=/etc dest=bar state=link owner={{ deploy }} group={{ deploy }}
 
-- name: Restart nginx (forcibly - is this necessary?)
-  service: name=nginx state=restarted
+- name: Ensure nginx is started (NOTE! Redeploys may need a RESTART!)
+  service: name=nginx state=started

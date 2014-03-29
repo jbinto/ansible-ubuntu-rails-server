@@ -16,4 +16,5 @@
   template: src=pg_hba.conf.j2 dest=/etc/postgresql/9.3/main/pg_hba.conf
 
 - name: Restart PostgreSQL
-  service: name=postgresql state=restarted
+  # NOTE: If conf files were updated here, need to FORCE a RESTART!
+  service: name=postgresql state=started
