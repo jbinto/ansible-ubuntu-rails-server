@@ -5,7 +5,7 @@
 
   roles:
     - { role: users, sudo: true, user: vagrant }
-    #- { role: ruby-deps, sudo: true }
+    - { role: ruby-deps, sudo: true }
     #- { role: postgresql, sudo: true }
     #- { role: rbenv }
     #- { role: ruby }
