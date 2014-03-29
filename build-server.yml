@@ -30,14 +30,14 @@
   vars_files:
     - vars/defaults.yml
   sudo: False
-  remote_user: deploy
+  remote_user: "{{deploy}}"
   roles:
     # The following roles don't require 'sudo' and are executed as 'deploy'.
     # QUESTION: Isn't a bad idea to let 'deploy' run the application, if he has R/W access to binaries?
     # Shouldn't we have 'provision', 'deploy', and 'execute' users? Hmm...
 
     - { role: rbenv, tags: ['rbenv'] }
-    #- { role: ruby, remote_user: "{{deploy}}", tags: ['ruby'] }
+    - { role: ruby, tags: ['ruby'] }
 
     # coming soon:
     #- bikeways
