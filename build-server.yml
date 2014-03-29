@@ -4,9 +4,10 @@
     - vars/defaults.yml
 
   roles:
-    - { role: users, sudo: true, user: vagrant }
-    - { role: ruby-deps, sudo: true }
-    #- { role: postgresql, sudo: true }
+    - { role: deploy-user, sudo: true, user: vagrant }
+    - { role: linux-prereqs, sudo: true }
+    - { role: postgresql, sudo: true }
+    - { role: nginx, sudo: true }
     #- { role: rbenv }
     #- { role: ruby }
 
