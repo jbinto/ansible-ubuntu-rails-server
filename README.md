@@ -52,6 +52,7 @@ The following command will:
 
 * Use Vagrant to create a new Ubuntu virtual machine. 
 * Boot that machine with Virtualbox.
+* Ask you for the `deploy` sudo password (the one you just crypted).
 * Use our Ansible playbook to provision everything needed for the Rails server.
 
 ```
