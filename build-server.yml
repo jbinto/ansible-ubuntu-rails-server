@@ -1,13 +1,17 @@
 ---
+
+# Confused about roles?
+# http://docs.ansible.com/playbooks_roles.html#roles
+
 - hosts: all
   vars_files:
     - vars/defaults.yml
 
   roles:
-    - { role: deploy-user, sudo: true, user: vagrant }
-    - { role: linux-prereqs, sudo: true }
-    - { role: postgresql, sudo: true }
-    - { role: nginx, sudo: true }
+    - { role: deploy-user, sudo: true, user: vagrant, tags: ['deploy-user'] }
+    - { role: linux-prereqs, sudo: true, tags: ['linux-prereqs'] }
+    - { role: postgresql, sudo: true, tags: ['postgresql'] }
+    - { role: nginx, sudo: true, tags: ['nginx'] }
     #- { role: rbenv }
     #- { role: ruby }
 

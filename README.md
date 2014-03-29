@@ -42,10 +42,20 @@ Generate a crypted password, and put it in `vars/default.yml`.
 python support/generate-crypted-password.py
 ```
 
-Start the virtual machine, and provision a Rails server.
+The following command will:
+
+* Use Vagrant to create a new Ubuntu virtual machine. 
+* Boot that machine with Virtualbox.
+* Use our Ansible playbook to provision everything needed for the Rails server.
 
 ```
 vagrant up
+```
+
+To run individual roles (e.g. only install nginx), try the following. You can replace `nginx` with any role name, since they're all tagged in `build-server.yml`.
+
+```
+ansible-playbook build-server.yml -i hosts --tags nginx
 ```
 
 ## Notes

@@ -1,28 +1,19 @@
 # Borrowed from https://github.com/dodecaphonic/ansible-rails-app/blob/master/roles/webserver/tasks/nginx.yml
 
-- hosts: webservers
-  user: deploy
-  sudo: True
-  vars_files:
-    - vars.yml
-  vars:
-    deploy: deploy
+- name: Install nginx
+  apt: pkg=nginx state=latest
 
-  tasks:
-    - name: Install nginx
-      apt: pkg=nginx state=latest
+- name: Remove the default nginx app's config
+  file: path=/etc/nginx/sites-enabled/default state=absent
 
-    - name: Remove the default nginx app's config
-      file: path=/etc/nginx/sites-enabled/default state=absent
+- name: Remove the default nginx app's symlink if it exists
+  file: path=/etc/nginx/sites-enabled/{{ app_name }} state=absent
 
-    - name: Remove the default nginx app's symlink if it exists
-      file: path=/etc/nginx/sites-enabled/{{ app_name }} state=absent
+- name: Configure nginx for the app
+  template: src={{ app_name }}.j2 dest=/etc/nginx/sites-available/{{ app_name }} group={{ deploy }} owner={{ deploy }} force=yes
 
-    - name: Configure nginx for the app
-      template: src=templates/nginx/{{ app_name }} dest=/etc/nginx/sites-available/{{ app_name }} group={{ deploy }} owner={{ deploy }} force=yes
+- name: Enable the app
+  file: src=/etc dest=bar state=link owner={{ deploy }} group={{ deploy }}
 
-    - name: Enable the app
-      file: src=/etc dest=bar state=link owner={{ deploy }} group={{ deploy }}
-
-    - name: Restart nginx (forcibly - is this necessary?)
-      service: name=nginx state=restarted
+- name: Restart nginx (forcibly - is this necessary?)
+  service: name=nginx state=restarted
