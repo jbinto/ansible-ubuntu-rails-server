@@ -1,0 +1,12 @@
+---
+- hosts: all
+  vars_files:
+    - vars/defaults.yml
+    
+  roles:
+    - users
+    - ruby-deps
+    - rbenv
+    - ruby
+    - postgresql 
+    - bikeways
