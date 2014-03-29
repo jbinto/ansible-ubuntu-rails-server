@@ -7,7 +7,7 @@
 # Enhancements (c) Jesse Buchanan 2014 - GPL v2+
 
 # Purpose: Generates a secure, crypted password for use in /etc/shadow.
-# Usage: ./shapass
+# Usage: Execute without arguments.
 
 import string
 import getpass
