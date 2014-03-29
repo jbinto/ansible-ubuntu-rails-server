@@ -25,21 +25,27 @@ Synthesized from the following sources:
 
 ## Usage
 
-Install Vagrant:
-http://www.vagrantup.com/downloads.html
+[Vagrant](http://www.vagrantup.com/downloads.html) must be installed from the website.
 
-I'm using 1.5.1 for OS X.
+Install Ansible and clone the repo.
 
 ```
 brew install ansible
 
 git clone https://github.com/jbinto/ansible-play.git
 cd ansible-play/app
-vagrant up
+```
 
-ansible-playbook devops/webserver.yml -i devops/webhosts -vvvv
-ansible-playbook devops/postgres.yml -i devops/webhosts -vvvv
-ansible-playbook devops/rbenv.yml -i devops/webhosts -vvvv -K
+Generate a crypted password, and put it in `vars/default.yml`.
+
+```
+python support/generate-crypted-password.py
+```
+
+Start the virtual machine, and provision a Rails server.
+
+```
+vagrant up
 ```
 
 ## Notes
