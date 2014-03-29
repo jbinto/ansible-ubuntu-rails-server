@@ -40,3 +40,4 @@
     - htop
     - iftop
     - python-pycurl # for postgresql playbook, uses apt_pkg
+    - python-software-properties # for `add-apt-repository` command

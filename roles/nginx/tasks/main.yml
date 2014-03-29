@@ -1,5 +1,8 @@
 # Borrowed from https://github.com/dodecaphonic/ansible-rails-app/blob/master/roles/webserver/tasks/nginx.yml
 
+- name: Add the nginx PPA
+  command: add-apt-repository -y ppa:nginx/stable creates=/etc/apt/source.list.d/nginx-stable-precise.list
+
 - name: Install nginx
   apt: pkg=nginx state=latest
 
