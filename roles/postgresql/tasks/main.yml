@@ -1,7 +1,7 @@
 # Required for apt_key module
 # see https://groups.google.com/forum/#!topic/ansible-project/ooAm8g3EEsU
 - name: Install python-pycurl
-  apt: pkg=python-pycurl state=latest
+  apt: pkg=python-pycurl state=latest update_cache=true
 
 - name: Add PostgreSQL repo key
   apt_key: url=http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
