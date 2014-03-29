@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     web.vm.provision :ansible do |ansible|
       ansible.playbook = "build-server.yml"
       ansible.inventory_path = "hosts"
-      ansible.verbose = "vvv"
+      ansible.verbose = "v"
       #ansible.sudo = true
 
       # https://github.com/mitchellh/vagrant/issues/3096
