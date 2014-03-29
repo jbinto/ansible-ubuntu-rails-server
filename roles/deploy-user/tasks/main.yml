@@ -1,0 +1,26 @@
+- name: create deploy user
+  user: name=deploy comment="deploy user" generate_ssh_key=yes state=present password={{password}} shell=/bin/bash
+
+- name: authorize my SSH key to access all users
+  authorized_key: user={{ item }} key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  ignore_errors: yes
+  with_items:
+    - root
+    - vagrant
+    - deploy
+
+- name: copy known hosts to deploy user (for bitbucket)
+  action: copy src=known_hosts dest=~{{deploy}}/.ssh/known_hosts owner={{deploy}} group={{deploy}}
+
+# this SSH key is only used to access Bitbucket
+- name: copy deploy private key to VM
+  action: copy src=deploy_rsa dest=~{{deploy}}/.ssh/deploy_rsa owner={{deploy}} group={{deploy}}
+
+- name: copy deploy public key to VM
+  action: copy src=deploy_rsa.pub dest=~{{deploy}}/.ssh/deploy_rsa.pub owner={{deploy}} group={{deploy}} mode=0644      
+
+- name: copy ssh_config so that bitbucket will be accessed using the injected private key
+  action: copy src=ssh_config dest=~{{deploy}}/.ssh/config owner={{deploy}} group={{deploy}}
+
+- name: add deploy to sudoers
+  lineinfile: "dest=/etc/sudoers state=present line='{{deploy}} ALL=(ALL:ALL) ALL'"

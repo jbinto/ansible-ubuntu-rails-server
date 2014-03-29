@@ -1,0 +1,18 @@
+# Most of this borrowed from https://github.com/leucos/ansible-rbenv-playbook
+
+- name: Checks if target ruby is installed
+  shell: cd; bash -lc "rbenv versions | grep {{ ruby_version }} | tr '*' ' ' | sed -e 's/\s\+//' | cut -f1 -d' '"
+  # This is just a 'get' operation, so can't really change.
+  # The rc from this shell does indicate to ansible that it's changed, so let's suppress that.
+  # http://docs.ansible.com/playbooks_error_handling.html#overriding-the-changed-result
+  changed_when: False
+  register: ruby_is_installed
+
+- name: Installs ruby
+  shell: cd; bash -lc "MAKEOPTS={{ rbenv_makeopts }} CONFIGURE_OPTS=--disable-install-rdoc rbenv install {{ ruby_version }}"
+  when: ruby_is_installed.stdout != ruby_version
+  # Takes no more than 600 secs on a small VM
+  # See http://docs.ansible.com/playbooks_async.html
+  async: 600
+  poll: 30
+  notify: Set rbenv global ruby version

@@ -25,21 +25,37 @@ Synthesized from the following sources:
 
 ## Usage
 
-Install Vagrant:
-http://www.vagrantup.com/downloads.html
+[Vagrant](http://www.vagrantup.com/downloads.html) must be installed from the website.
 
-I'm using 1.5.1 for OS X.
+Install Ansible and clone the repo.
 
 ```
 brew install ansible
 
 git clone https://github.com/jbinto/ansible-play.git
 cd ansible-play/app
-vagrant up
+```
 
-ansible-playbook devops/webserver.yml -i devops/webhosts -vvvv
-ansible-playbook devops/postgres.yml -i devops/webhosts -vvvv
-ansible-playbook devops/rbenv.yml -i devops/webhosts -vvvv -K
+Generate a crypted password, and put it in `vars/default.yml`.
+
+```
+python support/generate-crypted-password.py
+```
+
+The following command will:
+
+* Use Vagrant to create a new Ubuntu virtual machine. 
+* Boot that machine with Virtualbox.
+* Use our Ansible playbook to provision everything needed for the Rails server.
+
+```
+vagrant up
+```
+
+To run individual roles (e.g. only install nginx), try the following. You can replace `nginx` with any role name, since they're all tagged in `build-server.yml`.
+
+```
+ansible-playbook build-server.yml -i hosts --tags nginx
 ```
 
 ## Notes
