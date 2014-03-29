@@ -1,6 +1,12 @@
 # jbinto/ansible-play
 
-Following tutorial to create idempotent, repeatable provisioning script for Rails applications (among other things) using Ansible.
+Following various sources to create an idempotent, repeatable provisioning script for Rails applications (among other things) using Ansible.
+
+My current goal is to be able to deploy a Rails / Postgres / PostGIS app to DigitalOcean in "one click". Perhaps "many clicks", but as minimal human intervention as possible.
+
+Repeatably. Possibly even including provisioning of the cloud instances.
+
+At the very least, to create a consistent set of DEV, STAGING and PROD environments.
 
 Synthesized from the following sources:
 
@@ -10,8 +16,6 @@ Synthesized from the following sources:
 * [dodecaphonic/ansible-rails-app](https://github.com/dodecaphonic/ansible-rails-app/)
 * [Ansible: List of All Modules](http://docs.ansible.com/list_of_all_modules.html) (easiest way to find module docs, CMD+F / CTRL+F)
 
-Adapted as necessary.
-
 ## Usage
 
 Install Vagrant:
@@ -19,7 +23,6 @@ http://www.vagrantup.com/downloads.html
 
 I'm using 1.5.1 for OS X.
 
-#
 ```
 brew install ansible
 
