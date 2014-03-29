@@ -25,4 +25,4 @@
       #  template: src=postgresql.conf dest=/etc/postgresql/9.3/main/postgresql.conf
 
       - name: Restart PostgreSQL
-        command: service postgresql restart
+        service: name=postgresql state=restarted
