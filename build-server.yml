@@ -1,19 +1,43 @@
 ---
 
-# Confused about roles?
+# Confused about Ansible roles?
+# I was too. They're basically just a bit of naming convention magic.
 # http://docs.ansible.com/playbooks_roles.html#roles
 
 - hosts: all
   vars_files:
     - vars/defaults.yml
+  sudo: True
+
+  # NOTE: This is messy. We want to get rid of 'vagrant' eventually, e.g. before production.
+  #       The only thing different between 'vagrant' and 'deploy' is sudo NOPASSWD.
+  #       Does it really matter in the end then?
+  #       Everything is owned by 'root' in the end since it's all sudo.
+
+  # Commented, stay implicit for now
+  # user: vagrant
 
   roles:
-    - { role: deploy-user, sudo: true, user: vagrant, tags: ['deploy-user'] }
-    - { role: linux-prereqs, sudo: true, tags: ['linux-prereqs'] }
-    - { role: postgresql, sudo: true, tags: ['postgresql'] }
-    - { role: nginx, sudo: true, tags: ['nginx'] }
-    #- { role: rbenv }
-    #- { role: ruby }
+    # The following roles require 'sudo' and are executed as the 'vagrant' user.
+    # Mitigation: Delete vagrant user after deploy. deploy user can still 'sudo', he just needs a password.
+    - { role: deploy-user, tags: ['deploy-user'] }
+    - { role: linux-prereqs, tags: ['linux-prereqs'] }
+    - { role: postgresql, tags: ['postgresql'] }
+    - { role: nginx, tags: ['nginx'] }
+
+
+- hosts: all
+  vars_files:
+    - vars/defaults.yml
+  sudo: False
+  remote_user: deploy
+  roles:
+    # The following roles don't require 'sudo' and are executed as 'deploy'.
+    # QUESTION: Isn't a bad idea to let 'deploy' run the application, if he has R/W access to binaries?
+    # Shouldn't we have 'provision', 'deploy', and 'execute' users? Hmm...
+
+    - { role: rbenv, tags: ['rbenv'] }
+    #- { role: ruby, remote_user: "{{deploy}}", tags: ['ruby'] }
 
     # coming soon:
     #- bikeways
