@@ -1,0 +1,27 @@
+# Most of this borrowed from https://github.com/leucos/ansible-rbenv-playbook
+
+- hosts: webservers
+  user: deploy
+  sudo: False
+  vars_files:
+    - vars.yml
+  vars:
+    deploy: deploy
+
+  tasks:
+    - name: Checks if target ruby is installed
+      shell: cd; bash -lc "rbenv versions | grep {{ ruby_version }} | tr '*' ' ' | sed -e 's/\s\+//' | cut -f1 -d' '"
+      register: ruby_is_installed
+
+    - name: Installs ruby
+      shell: cd; bash -lc "MAKEOPTS={{ rbenv_makeopts }} CONFIGURE_OPTS=--disable-install-rdoc rbenv install {{ ruby_version }}"
+      when: ruby_is_installed.stdout != ruby_version
+      # Takes no more than 600 secs on a small VM
+      # See http://docs.ansible.com/playbooks_async.html
+      async: 600
+      poll: 30
+      notify: Set rbenv global ruby version
+
+  handlers:
+    - name: Set rbenv global ruby version
+      shell: cd; bash -lc "rbenv global {{ ruby_version }}"
