@@ -1,29 +1,20 @@
 # Most of this borrowed from https://github.com/leucos/ansible-rbenv-playbook
 
-- hosts: webservers
-  user: deploy
-  sudo: False
-  vars_files:
-    - vars.yml
-  vars:
-    deploy: deploy
+- name: Install rbenv
+  git: repo=git://github.com/sstephenson/rbenv.git dest=~{{deploy}}/.rbenv
 
-  tasks:
-      - name: Install rbenv
-        git: repo=git://github.com/sstephenson/rbenv.git dest=~{{deploy}}/.rbenv
+- name: Create (if not exists) ~/.bash.d/
+  file: dest=~{{deploy}}/.bash.d/ state=directory
 
-      - name: Create (if not exists) ~/.bash.d/
-        file: dest=~{{deploy}}/.bash.d/ state=directory
+- name: Copy 50_rbenv.bash to ~/.bash.d/
+  copy: src=50_rbenv.bash dest=~{{deploy}}/.bash.d/50_rbenv.bash mode=700 owner={{deploy}}
 
-      - name: Copy 50_rbenv.bash to ~/.bash.d/
-        copy: src=templates/rbenv/50_rbenv.bash dest=~{{deploy}}/.bash.d/50_rbenv.bash mode=700 owner={{deploy}}
+- name: Add rbenv to ~/.bash_profile
+  # Clever: the task is idempotent because of the regexp=rbenv
+  lineinfile: dest=~{{deploy}}/.bash_profile regexp="rbenv" insertafter=EOF line="source ~/.bash.d/50_rbenv.bash" create=yes owner={{deploy}}
 
-      - name: Add rbenv to ~/.bash_profile
-        # Clever: the task is idempotent because of the regexp=rbenv
-        lineinfile: dest=~{{deploy}}/.bash_profile regexp="rbenv" insertafter=EOF line="source ~/.bash.d/50_rbenv.bash" create=yes owner={{deploy}}
+- name: Create (if not exists) ~/.rbenv/plugns/
+  file: path=~{{deploy}}/.rbenv/plugins/ owner={{deploy}} group={{deploy}} mode=0755 state=directory
 
-      - name: Create (if not exists) ~/.rbenv/plugns/
-        file: path=~{{deploy}}/.rbenv/plugins/ owner={{deploy}} group={{deploy}} mode=0755 state=directory
-
-      - name: Install ruby-build
-        git: repo=git://github.com/sstephenson/ruby-build.git dest=~{{deploy}}/.rbenv/plugins/ruby-build
+- name: Install ruby-build
+  git: repo=git://github.com/sstephenson/ruby-build.git dest=~{{deploy}}/.rbenv/plugins/ruby-build
