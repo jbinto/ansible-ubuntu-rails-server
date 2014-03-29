@@ -8,6 +8,13 @@ Repeatably. Possibly even including provisioning of the cloud instances.
 
 At the very least, to create a consistent set of DEV, STAGING and PROD environments.
 
+Benefits to using something like Ansible to manage servers:
+
+* Reduce "[jenga](https://www.youtube.com/watch?v=I7H6wGy5zf4)" feeling when running servers (same win as unit testing and source control)
+* Consistency between different environments
+* Executable documentation
+* Combined with cloud providers and hourly billing, can create on-demand staging environments
+
 Synthesized from the following sources:
 
 * [From Zero to Deployment: Vagrant, Ansible, Capistrano 3 to deploy your Rails Apps to DigitalOcean automatically (part 1)](http://ihassin.wordpress.com/2013/12/15/from-zero-to-deployment-vagrant-ansible-rvm-and-capistrano-to-deploy-your-rails-apps-to-digitalocean-automatically/)
