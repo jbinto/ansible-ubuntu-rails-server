@@ -1,22 +1,22 @@
 # Borrowed from https://github.com/dodecaphonic/ansible-rails-app/blob/master/roles/webserver/tasks/nginx.yml
 
 - name: Add the nginx PPA
-  command: add-apt-repository -y ppa:nginx/stable creates=/etc/apt/source.list.d/nginx-stable-precise.list
+  command: add-apt-repository -y ppa:nginx/stable creates=/etc/apt/source.list.d/nginx-stable-precise.list creates=/etc/apt/sources.list.d/nginx-stable-precise.list
 
 - name: Install nginx
-  apt: pkg=nginx state=latest
+  apt: pkg=nginx state=latest update_cache=true
 
 - name: Remove the default nginx app's config
   file: path=/etc/nginx/sites-enabled/default state=absent
 
-- name: Remove the default nginx app's symlink if it exists
-  file: path=/etc/nginx/sites-enabled/{{ app_name }} state=absent
+# - name: Remove the default nginx app's symlink if it exists
+#   file: path=/etc/nginx/sites-enabled/{{ app_name }} state=absent
 
 - name: Configure nginx for the app
   template: src={{ app_name }}.j2 dest=/etc/nginx/sites-available/{{ app_name }} group={{ deploy }} owner={{ deploy }} force=yes
 
 - name: Enable the app
-  file: src=/etc dest=bar state=link owner={{ deploy }} group={{ deploy }}
+  file: src=/etc/nginx/sites-available/{{ app_name }} dest=/etc/nginx/sites-enabled/{{ app_name }} state=link owner={{ deploy }} group={{ deploy }}
 
 - name: Ensure nginx is started (NOTE! Redeploys may need a RESTART!)
   service: name=nginx state=started
