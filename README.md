@@ -2,7 +2,13 @@
 
 Following tutorial to create idempotent, repeatable provisioning script for Rails applications (among other things) using Ansible.
 
-http://ihassin.wordpress.com/2013/12/15/from-zero-to-deployment-vagrant-ansible-rvm-and-capistrano-to-deploy-your-rails-apps-to-digitalocean-automatically/
+Synthesized from the following sources:
+
+* [From Zero to Deployment: Vagrant, Ansible, Capistrano 3 to deploy your Rails Apps to DigitalOcean automatically (part 1)](http://ihassin.wordpress.com/2013/12/15/from-zero-to-deployment-vagrant-ansible-rvm-and-capistrano-to-deploy-your-rails-apps-to-digitalocean-automatically/)
+* [leucos/ansible-tuto](https://github.com/leucos/ansible-tuto)
+* [leucos/ansible-rbenv-playbook](https://github.com/leucos/ansible-rbenv-playbook)
+* [dodecaphonic/ansible-rails-app](https://github.com/dodecaphonic/ansible-rails-app/)
+* [Ansible: List of All Modules](http://docs.ansible.com/list_of_all_modules.html) (easiest way to find module docs, CMD+F / CTRL+F)
 
 Adapted as necessary.
 
