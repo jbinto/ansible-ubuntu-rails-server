@@ -1,0 +1,25 @@
+server {
+  listen 80;
+  server_name {{ server_name }};
+  root ~{{ deploy }}/rails/{{ app_name }}/public;
+  passenger_enabled on;
+
+  # warning: cargo cult server optimization ahead
+  gzip on;
+  gzip_types text/plain text/html text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript application/json;
+
+  location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+    expires 1y;
+    log_not_found off;
+  }
+
+  location ~ ^/(assets|images|javascripts|stylesheets|swfs|system)/ {
+    gzip_static on;
+    expires     max;
+    add_header  Cache-Control public;
+    add_header  Last-Modified "";
+    add_header  ETag "";
+
+    break;
+  }
+}

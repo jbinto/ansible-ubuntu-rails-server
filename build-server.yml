@@ -24,8 +24,7 @@
     - { role: deploy-user, tags: ['deploy-user'] }
     - { role: linux-prereqs, tags: ['linux-prereqs'] }
     - { role: postgresql, tags: ['postgresql'] }
-    - { role: nginx, tags: ['nginx'] }
-    - { role: passenger, tags: ['passenger'] }
+    - { role: nginx-passenger, tags: ['nginx-passenger'] }
 
 - hosts: all
   vars_files:
