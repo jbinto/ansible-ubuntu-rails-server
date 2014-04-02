@@ -27,8 +27,12 @@
 - name: Add PostgreSQL repo
   apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'
 
-- name: Install PostgreSQL
-  apt: pkg=postgresql-9.3 state=latest update_cache=true
+- name: Install postgresql, libpq-dev, python-psycopg2
+  action: apt pkg={{item}} state=latest update_cache=true
+  with_items:
+    - postgresql
+    - libpq-dev
+    - python-psycopg2
 
 - name: Copy valid pg_hba.conf
   template: src=pg_hba.conf.j2 dest=/etc/postgresql/9.3/main/pg_hba.conf

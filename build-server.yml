@@ -25,6 +25,8 @@
     - { role: linux-prereqs, tags: ['linux-prereqs'] }
     - { role: postgresql, tags: ['postgresql'] }
     - { role: nginx-passenger, tags: ['nginx-passenger'] }
+    - { role: postgresql-db-user, tags: ['postgresql-db-user'] }
+
 
 - hosts: all
   vars_files:

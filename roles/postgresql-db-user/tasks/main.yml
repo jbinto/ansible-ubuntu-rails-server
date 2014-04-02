@@ -1,0 +1,10 @@
+- name: Create {{database_name}} database
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db: name={{database_name}}
+
+- name: Create user {{database_user}} on {{database_name}}
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: db={{database_name}} name={{database_user}} password={{database_password}} role_attr_flags=CREATEDB,NOSUPERUSER
+
