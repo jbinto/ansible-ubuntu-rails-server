@@ -1,3 +1,6 @@
-Hostname bitbucket.com
-  IdentityFile /home/deploy/.ssh/deploy_rsa
-  StrictHostKeyChecking no
+Host bitbucket.com
+StrictHostKeyChecking no
+
+Host github.com
+StrictHostKeyChecking no
+
