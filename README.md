@@ -42,11 +42,11 @@ Generate a crypted password, and put it in `vars/default.yml`.
 python support/generate-crypted-password.py
 ```
 
-Generate an RSA keypair. This is used specially for the `deploy` user to authenticate to Bitbucket. This is NOT used for SSH authentication to the server, and is really a special case.
+~~Generate an RSA keypair. This is used specially for the `deploy` user to authenticate to Bitbucket. This is NOT used for SSH authentication to the server, and is really a special case.
 
 ```
 ssh-keygen -f ./roles/deploy-user/files/deploy_rsa -N ''
-```
+```~~
 
 The following command will:
 
