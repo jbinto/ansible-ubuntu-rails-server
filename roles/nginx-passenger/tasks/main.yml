@@ -38,11 +38,13 @@
 - name: Remove the default nginx app's symlink if it exists
   file: path=/etc/nginx/sites-enabled/default state=absent
 
-- name: Configure nginx for the app
-  template: src={{ app_name }}.j2 dest=/etc/nginx/sites-available/{{ app_name }} group={{ deploy }} owner={{ deploy }} force=yes
+# Note: Will do this in Capistrano, for now.
 
-- name: Enable the app
-  file: src=/etc/nginx/sites-available/{{ app_name }} dest=/etc/nginx/sites-enabled/{{ app_name }} state=link owner={{ deploy }} group={{ deploy }}
+#- name: Configure nginx for the app
+#  template: src={{ app_name }}.j2 dest=/etc/nginx/sites-available/{{ app_name }} group={{ deploy }} owner={{ deploy }} force=yes
+
+#- name: Enable the app
+#  file: src=/etc/nginx/sites-available/{{ app_name }} dest=/etc/nginx/sites-enabled/{{ app_name }} state=link owner={{ deploy }} group={{ deploy }}
 
 - name: Ensure nginx is started (NOTE! Redeploys may need a RESTART!)
   service: name=nginx state=started
