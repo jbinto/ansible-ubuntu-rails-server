@@ -10,8 +10,8 @@
 - name: copy ssh_config so that github doesn't do host verification
   action: copy src=ssh_config dest=~{{deploy}}/.ssh/config owner={{deploy}} group={{deploy}}
 
-- name: add deploy to sudoers
-  lineinfile: "dest=/etc/sudoers state=present line='{{deploy}} ALL=(ALL:ALL) ALL'"
+- name: add deploy as NOPASSWD to sudoers
+  lineinfile: "dest=/etc/sudoers state=present line='{{deploy}} ALL=(ALL:ALL) NOPASSWD:ALL'"
 
 - name: create www-data group
   group: name=www-data state=present
