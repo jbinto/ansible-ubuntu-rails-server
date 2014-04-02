@@ -1,8 +1,20 @@
-# Required for apt_key module
+
+# BUG: When running 'vagrant up' for the first time, the python-pycurl task
+# always fails, with:
+#
+# msg: Failed to lock apt for exclusive operation
+#
+# The next time you run 'vagrant provision' it will be fine.
+#
+# Suspect race condition with the 'async' apt job run previous to this.
+
+
+# python-pycurl is required for apt_key module
 # see https://groups.google.com/forum/#!topic/ansible-project/ooAm8g3EEsU
 - name: Install python-pycurl
   apt: pkg=python-pycurl state=latest update_cache=true
 
+# BUG: Is it secure to retrieve a PGP key over HTTP?
 - name: Add PostgreSQL repo key
   apt_key: url=http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
 
