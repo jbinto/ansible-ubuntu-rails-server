@@ -42,12 +42,6 @@ Generate a crypted password, and put it in `vars/default.yml`.
 python support/generate-crypted-password.py
 ```
 
-~~Generate an RSA keypair. This is used specially for the `deploy` user to authenticate to Bitbucket. This is NOT used for SSH authentication to the server, and is really a special case.
-
-```
-ssh-keygen -f ./roles/deploy-user/files/deploy_rsa -N ''
-```~~
-
 The following command will:
 
 * Use Vagrant to create a new Ubuntu virtual machine. 
@@ -85,7 +79,7 @@ ansible-playbook build-server.yml -i hosts --tags nginx
 
 * ~~Despite that, I still can't get `ansible-playbook` to work with the `vagrant` user, because my SSH key isn't moved there.~~ **UPDATE**: This was because I was overwriting `/etc/sudoers`. This gave `deploy` sudo access, but made everyone else (including `vagrant`) lose it.
 
-* Can't include RSA keys in the git repo. Run `ssh-keygen` and create a deploy keypair, and move it to `devops/templates/deploy_rsa[.pub]`.
+* ~~Can't include RSA keys in the git repo. Run `ssh-keygen` and create a deploy keypair, and move it to `devops/templates/deploy_rsa[.pub]`.~~ (Not using deploy keys, but ssh-agent forwarding instead.)
 
 * Not sure if the deploy keypair should have a passphrase on it or not? Well, I am sure, *it should*, but whether automation relies on this or not?
 
