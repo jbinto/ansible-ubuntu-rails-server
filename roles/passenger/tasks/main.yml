@@ -1,0 +1,26 @@
+# Adapted from official Passenger/nginx documentation:
+# http://www.modrails.com/documentation/Users%20guide%20Nginx.html
+
+- name: Add Phusion Passenger repo key
+  apt_key: url=http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
+
+- name: Install packages to enable apt over HTTPS
+  action: apt pkg={{item}} state=installed update_cache=true
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+
+- name: Add Phusion Passenger repo
+  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger precise main'
+
+
+# Wait, does this overwrite the nginx we have installed?
+# ii  nginx-full                      1.4.7-1+precise0                  nginx web/proxy server (standard version)
+
+# If so, why bother with an nginx playbook at all?
+- name: Install nginx-extras and passenger
+  action: apt pkg={{item}} state=installed update_cache=true
+  with_items:
+    # note: Passenger repo has it's own nginx-extras package.
+    - nginx-extras
+    - passenger

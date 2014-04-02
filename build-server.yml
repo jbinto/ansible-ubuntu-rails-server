@@ -19,12 +19,13 @@
 
   roles:
     # The following roles require 'sudo' and are executed as the 'vagrant' user.
+    # This is a security risk!
     # Mitigation: Delete vagrant user after deploy. deploy user can still 'sudo', he just needs a password.
     - { role: deploy-user, tags: ['deploy-user'] }
     - { role: linux-prereqs, tags: ['linux-prereqs'] }
     - { role: postgresql, tags: ['postgresql'] }
     - { role: nginx, tags: ['nginx'] }
-
+    - { role: passenger, tags: ['passenger'] }
 
 - hosts: all
   vars_files:
