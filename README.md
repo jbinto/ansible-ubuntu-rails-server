@@ -1,4 +1,16 @@
-# jbinto/ansible-play
+# jbinto/ansible-ubuntu-rails-server
+
+## tl;dr
+
+[Ansible](http://docs.ansible.com/index.html) playbook to provision a Rails deployment server with:
+
+* Ubuntu 12.04
+* Postgresql 9.3
+* rbenv
+* ruby 2.1.1
+* Phusion Passenger + nginx from official apt repo
+
+## Overview
 
 Following various sources to create an idempotent, repeatable provisioning script for Rails applications (among other things) using Ansible.
 
@@ -15,14 +27,6 @@ Benefits to using something like Ansible to manage servers:
 * Executable documentation
 * Combined with cloud providers and hourly billing, can create on-demand staging environments
 
-Synthesized from the following sources:
-
-* [From Zero to Deployment: Vagrant, Ansible, Capistrano 3 to deploy your Rails Apps to DigitalOcean automatically (part 1)](http://ihassin.wordpress.com/2013/12/15/from-zero-to-deployment-vagrant-ansible-rvm-and-capistrano-to-deploy-your-rails-apps-to-digitalocean-automatically/)
-* [leucos/ansible-tuto](https://github.com/leucos/ansible-tuto)
-* [leucos/ansible-rbenv-playbook](https://github.com/leucos/ansible-rbenv-playbook)
-* [dodecaphonic/ansible-rails-app](https://github.com/dodecaphonic/ansible-rails-app/)
-* [Ansible: List of All Modules](http://docs.ansible.com/list_of_all_modules.html) (easiest way to find module docs, CMD+F / CTRL+F)
-
 ## Usage
 
 [Vagrant](http://www.vagrantup.com/downloads.html) must be installed from the website.
@@ -32,8 +36,8 @@ Install Ansible and clone the repo.
 ```
 brew install ansible
 
-git clone https://github.com/jbinto/ansible-play.git
-cd ansible-play
+git clone https://github.com/jbinto/ansible-ubuntu-rails-server.git
+cd ansible-ubuntu-rails-server
 ```
 
 Generate a crypted password, and put it in `vars/default.yml`.
@@ -44,7 +48,7 @@ python support/generate-crypted-password.py
 
 The following command will:
 
-* Use Vagrant to create a new Ubuntu virtual machine. 
+* Use Vagrant to create a new Ubuntu virtual machine.
 * Boot that machine with Virtualbox.
 * Ask you for the `deploy` sudo password (the one you just crypted).
 * Use our Ansible playbook to provision everything needed for the Rails server.
@@ -53,13 +57,15 @@ The following command will:
 vagrant up
 ```
 
-Sometimes, `vagrant up` times out before Ansible gets a chance to connect. I haven't figured this out yet. If this happens, run `vagrant provision` to continue the Ansible playbook.
+**BUG:** Sometimes, `vagrant up` times out before Ansible gets a chance to connect. I haven't figured this out yet. If this happens, run `vagrant provision` to continue the Ansible playbook.
 
 To run individual roles (e.g. only install nginx), try the following. You can replace `nginx` with any role name, since they're all tagged in `build-server.yml`.
 
 ```
 ansible-playbook build-server.yml -i hosts --tags nginx
 ```
+
+Once the provision is complete, continue to [jbinto/rails4_sample_app_capistrano](https://github.com/jbinto/rails4_sample_app_capistrano) to deploy a Rails application using Capistrano.
 
 ## Notes
 
@@ -130,3 +136,14 @@ I was defining `passenger_ruby` in my server-specific config, but forgetting `pa
 * Deploy user still might still be hardcoded some places - try renaming it
 * Provision to DigitalOcean!
 * `ag BUG; ag NOTE`
+
+## Sources / references
+
+Synthesized from the following sources:
+
+* [From Zero to Deployment: Vagrant, Ansible, Capistrano 3 to deploy your Rails Apps to DigitalOcean automatically (part 1)](http://ihassin.wordpress.com/2013/12/15/from-zero-to-deployment-vagrant-ansible-rvm-and-capistrano-to-deploy-your-rails-apps-to-digitalocean-automatically/)
+* [leucos/ansible-tuto](https://github.com/leucos/ansible-tuto)
+* [leucos/ansible-rbenv-playbook](https://github.com/leucos/ansible-rbenv-playbook)
+* [dodecaphonic/ansible-rails-app](https://github.com/dodecaphonic/ansible-rails-app/)
+* [Ansible: List of All Modules](http://docs.ansible.com/list_of_all_modules.html) (easiest way to find module docs, CMD+F / CTRL+F)
+* [Phusion Passenger users guide, Nginx edition](http://www.modrails.com/documentation/Users%20guide%20Nginx.html)
