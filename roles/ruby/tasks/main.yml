@@ -15,12 +15,7 @@
   # See http://docs.ansible.com/playbooks_async.html
   async: 600
   poll: 30
-  notify: Set rbenv global ruby version
-
-
-# BUG: This will always mark as changed. Need to make a check/register.
-
-- name: Install bundler
-  command: bash -lc "gem install bundle bundler"
-
+  notify:
+    - set_global_ruby_version
+    - install_bundler
 
