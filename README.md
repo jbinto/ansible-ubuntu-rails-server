@@ -53,6 +53,8 @@ The following command will:
 vagrant up
 ```
 
+Sometimes, `vagrant up` times out before Ansible gets a chance to connect. I haven't figured this out yet. If this happens, run `vagrant provision` to continue the Ansible playbook.
+
 To run individual roles (e.g. only install nginx), try the following. You can replace `nginx` with any role name, since they're all tagged in `build-server.yml`.
 
 ```
@@ -98,3 +100,22 @@ brew install ansible
 ```
 
 See [Stack Overflow question](https://stackoverflow.com/questions/22390655/ansible-installation-clang-error-unknown-argument-mno-fused-madd) for details.
+
+
+## Issues with Passenger
+
+There's two ways to install Passenger:
+
+* Using their official Ubuntu packages, which installs Passenger all over the system
+
+Or...
+
+* `gem install passenger` (or adding `passenger` to `Gemfile`)
+* `install-passenger-nginx-module`, which compiles a brand new nginx. [Nginx modules must be statically loaded.](https://github.com/phusion/passenger/wiki/Why-can't-Phusion-Passenger-extend-my-existing-Nginx%3F).
+
+The former makes more sense, since it's apt it seems cleaner/more maintainable.
+
+But it doesn't play well with rbenv. It uses the system ruby.
+
+To fix this, I needed to change `passenger_ruby` to point to the correct `~/.rbenv` ruby.
+
