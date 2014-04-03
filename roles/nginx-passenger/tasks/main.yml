@@ -33,7 +33,7 @@
     - passenger
 
 - name: Remove the default nginx app's config
-  file: path=/etc/nginx/sites-availablw/default state=absent
+  file: path=/etc/nginx/sites-available/default state=absent
 
 - name: Remove the default nginx app's symlink if it exists
   file: path=/etc/nginx/sites-enabled/default state=absent
@@ -46,5 +46,9 @@
 #- name: Enable the app
 #  file: src=/etc/nginx/sites-available/{{ app_name }} dest=/etc/nginx/sites-enabled/{{ app_name }} state=link owner={{ deploy }} group={{ deploy }}
 
+- name: Copy nginx.conf
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+
 - name: Ensure nginx is started (NOTE! Redeploys may need a RESTART!)
   service: name=nginx state=started
+
