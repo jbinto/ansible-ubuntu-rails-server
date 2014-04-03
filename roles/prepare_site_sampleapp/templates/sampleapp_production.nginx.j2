@@ -1,7 +1,7 @@
 server {
   listen 80;
   server_name {{ server_name }};
-  root /home/{{deploy}}/apps/{{full_app_name}}/current/public
+  root /home/{{deploy}}/apps/{{full_app_name}}/current/public;
   passenger_enabled on;
 
   # warning: cargo cult server optimization ahead

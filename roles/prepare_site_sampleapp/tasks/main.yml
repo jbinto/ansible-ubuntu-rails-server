@@ -31,5 +31,5 @@
 ###
 
 - name: Deploy {{full_app_name}} nginx config to sites-available
-  template: src={{full_app_name}}.nginx.conf dest=/etc/nginx/sites-available
+  template: src={{full_app_name}}.nginx.j2 dest=/etc/nginx/sites-enabled/{{full_app_name}}
   notify: reload_nginx_config
