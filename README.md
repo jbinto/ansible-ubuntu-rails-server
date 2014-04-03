@@ -102,22 +102,23 @@ brew install ansible
 See [Stack Overflow question](https://stackoverflow.com/questions/22390655/ansible-installation-clang-error-unknown-argument-mno-fused-madd) for details.
 
 
-## Issues with Passenger
+## Issues with Passenger - solved
 
 There's two ways to install Passenger:
 
-* Using their official Ubuntu packages, which installs Passenger all over the system
+* Using their official Ubuntu packages, which installs Passenger files in various locations throughout the system (n.b. as do all apt packages)
+* Your `passenger_root` must be a `locations.ini` file which points to all these locations. This ships with the passenger package and can also be generated with one of the `passenger-config about` commands.
 
 Or...
 
-* `gem install passenger` (or adding `passenger` to `Gemfile`)
-* `install-passenger-nginx-module`, which compiles a brand new nginx. [Nginx modules must be statically loaded.](https://github.com/phusion/passenger/wiki/Why-can't-Phusion-Passenger-extend-my-existing-Nginx%3F).
+* `gem install passenger` (or adding `passenger` to `Gemfile`), which contains all Passenger files in your rubygems directory.
+* `install-passenger-nginx-module`, which compiles a brand new nginx and installs it into `/opt/nginx`. [Nginx modules must be statically loaded.](https://github.com/phusion/passenger/wiki/Why-can't-Phusion-Passenger-extend-my-existing-Nginx%3F).
 
-The former makes more sense, since it's apt it seems cleaner/more maintainable.
+The former makes more sense, since it's apt it seems cleaner/more maintainable. Especially for nginx, I don't want to have to be recompiling if I need a new module or security update.
 
-But it doesn't play well with rbenv. It uses the system ruby.
+I spent a long time trying to figure out why nginx returned `403 Forbidden` for anything not in `./public`.
 
-To fix this, I needed to change `passenger_ruby` to point to the correct `~/.rbenv` ruby.
+I was defining `passenger_ruby` in my server-specific config, but forgetting `passenger_root`. I ended up putting these two lines in `/etc/nginx/nginx.conf`, and now all is well. In my server specific config, I only have `passenger_enabled`.
 
 ## Things that still need fixing
 
