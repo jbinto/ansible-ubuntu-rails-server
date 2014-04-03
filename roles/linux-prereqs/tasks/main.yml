@@ -41,3 +41,14 @@
     - iftop
     - python-pycurl # for postgresql playbook, uses apt_pkg
     - python-software-properties # for `add-apt-repository` command
+
+# Rails depends on a JS runtime.
+# Should move this to it's own role, eventually.
+
+- name: Node.js | Add the node.js PPA
+  action: command add-apt-repository -y ppa:chris-lea/node.js creates=/etc/apt/sources.list.d/chris-lea-node_js-precise.list
+
+- name: Node.js | Install nodejs and npm
+  action: apt pkg={{ item }} state=installed update_cache=yes
+  with_items:
+   - nodejs
