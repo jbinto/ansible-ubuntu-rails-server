@@ -25,3 +25,11 @@
 - name: Copy database.yml to config
   sudo: yes   # or chgrp will fail. For some reason, the setgid doesn't work here.
   template: src=database.yml.j2 dest=~{{deploy}}/apps/{{full_app_name}}/shared/config/database.yml owner={{deploy}} group=www-data mode=0640
+
+###
+### Nginx
+###
+
+- name: Deploy {{full_app_name}} nginx config to sites-available
+  template: src={{full_app_name}}.nginx.conf dest=/etc/nginx/sites-available
+  notify: reload_nginx_config
