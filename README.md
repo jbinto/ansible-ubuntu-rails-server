@@ -136,6 +136,7 @@ I was defining `passenger_ruby` in my server-specific config, but forgetting `pa
 * Deploy user still might still be hardcoded some places - try renaming it
 * Provision to DigitalOcean!
 * `ag BUG; ag NOTE`
+* Shouldn't have to SSH in to set postgres password in database.yml.
 
 ## Sources / references
 

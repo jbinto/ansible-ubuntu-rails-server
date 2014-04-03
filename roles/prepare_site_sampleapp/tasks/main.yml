@@ -1,3 +1,7 @@
+##
+## Postgres
+##
+
 - name: Create {{database_name}} database
   sudo: yes
   sudo_user: postgres
@@ -8,3 +12,12 @@
   sudo_user: postgres
   postgresql_user: db={{database_name}} name={{database_user}} password={{database_password}} role_attr_flags=CREATEDB,NOSUPERUSER
 
+##
+## Rails
+##
+
+- name: mkdir -p ~/apps/{{ full_app_name }}/shared/config
+  file: path=~/apps/{{ full_app_name }}/shared/config state=directory
+
+- name: Copy database.yml to config
+  template: src=database.yml.j2 dest=database.yml
