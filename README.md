@@ -119,3 +119,13 @@ But it doesn't play well with rbenv. It uses the system ruby.
 
 To fix this, I needed to change `passenger_ruby` to point to the correct `~/.rbenv` ruby.
 
+## Things that still need fixing
+
+* Security: 5minbootstrap
+* Security: Get rid of vagrant user
+* Security: Analyze exactly why we need NOPASSWD. Capistrano symlink stuff maybe can be done in Ansible, and if cap needs sudo, could restrict it to particular commands.
+* Restart nginx automagically after deploys? Still have to ssh in and do it manually. Not sure why.
+* Asset precompilation using official capistrano method - this happens on remote server?
+* Deploy user still might still be hardcoded some places - try renaming it
+* Provision to DigitalOcean!
+* `ag BUG; ag NOTE`
