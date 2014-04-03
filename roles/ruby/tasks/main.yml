@@ -8,7 +8,7 @@
   changed_when: False
   register: ruby_is_installed
 
-- name: Installs ruby
+- name: rbenv install {{ ruby_version }}
   shell: cd; bash -lc "MAKEOPTS={{ rbenv_makeopts }} CONFIGURE_OPTS=--disable-install-rdoc rbenv install {{ ruby_version }}"
   when: ruby_is_installed.stdout != ruby_version
   # Takes no more than 600 secs on a small VM
@@ -16,3 +16,11 @@
   async: 600
   poll: 30
   notify: Set rbenv global ruby version
+
+
+# BUG: This will always mark as changed. Need to make a check/register.
+
+- name: Install bundler
+  command: bash -lc "gem install bundle bundler"
+
+
