@@ -12,6 +12,8 @@ database_port: 5432
 database_name: sampleapp_production
 
 database_user: sampleapp
+database_password: "{{ lookup('password', inventory_dir + '/credentials/' + database_user + '.postgresql.txt length=20') }}"
+
 # Password is generarted on the fly, and later injected into database.yml.
 # See ./credentials/ for previously generated passwords.
 # This directory is ignored by Git.
