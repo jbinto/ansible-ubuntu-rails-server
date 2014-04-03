@@ -137,7 +137,7 @@ I was defining `passenger_ruby` in my server-specific config, but forgetting `pa
 * Provision to DigitalOcean!
 * `ag BUG; ag NOTE`
 * Shouldn't have to SSH in to set postgres password in database.yml.
-* Only update the apt cache once every N. (60 minutes? 24 hours? What if we need to force it?)
+* Only update the apt cache once every N. (60 minutes? 24 hours? What if we need to force it? -- easy, use a update_apt_cache handler on all things that need it, e.g. added repos)
 * Create a Vagrant Cloud box with some or all of the Ansible steps already completed.
 
 ## Sources / references
