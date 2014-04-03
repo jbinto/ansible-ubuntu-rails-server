@@ -17,8 +17,6 @@
     - { role: deploy-user, tags: ['deploy-user'] }
     - { role: linux-prereqs, tags: ['linux-prereqs'] }
     - { role: postgresql, tags: ['postgresql'] }
-    - { role: postgresql-db-user, tags: ['postgresql-db-user'] }
-
 
 # The following roles don't require 'sudo' and are executed as 'deploy'.
 # QUESTION: Isn't a bad idea to let 'deploy' run the application, if he has R/W access to binaries?
@@ -44,3 +42,20 @@
   sudo: True
   roles:
     - { role: nginx-passenger, tags: ['nginx-passenger'] }
+
+
+- hosts: all
+  vars_files:
+    - vars/defaults.yml
+    - vars/sampleapp.yml
+  sudo: False
+  remote_user: "{{deploy}}"
+  roles:
+    - { role: prepare_site_sampleapp, tags: ['prepare_site_sampleapp'] }
+
+
+# NOTE XXX BUG TODO:
+# Once we get rid of `vagrant` and have only `deploy`, then we can start
+# tagging individual tasks (e.g. apt) as sudo rather than through this
+# clunky multiple playbook approach. Then this file could be simplified.
+# (Though that approach *is* less DRY.)

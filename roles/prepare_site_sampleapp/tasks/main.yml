@@ -1,0 +1,27 @@
+##
+## Postgres
+##
+
+- name: Create {{database_name}} database
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db: name={{database_name}}
+
+- name: Create user {{database_user}} on {{database_name}}
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user: db={{database_name}}
+                   name={{database_user}}
+                   password={{database_password}}
+                   role_attr_flags=CREATEDB,NOSUPERUSER
+
+##
+## Rails
+##
+
+- name: mkdir -p ~{{deploy}}/apps/{{full_app_name}}/shared/config
+  file: path=~{{deploy}}/apps/{{full_app_name}}/shared/config state=directory
+
+- name: Copy database.yml to config
+  sudo: yes   # or chgrp will fail. For some reason, the setgid doesn't work here.
+  template: src=database.yml.j2 dest=~{{deploy}}/apps/{{full_app_name}}/shared/config/database.yml owner={{deploy}} group=www-data mode=0640

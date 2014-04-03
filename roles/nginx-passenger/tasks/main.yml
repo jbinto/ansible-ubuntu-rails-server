@@ -49,6 +49,5 @@
 - name: Copy nginx.conf
   template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
 
-# Note: At this point, though we *could* start nginx, it is pointless since ruby isn't installed yet.
-# TODO BUG NOTE REFACTOR: nginx role should be independent of the setup of individual Rails sites.
-# Should have a role for each Rails app, and define all passenger_* stuff in the site-specific config.
+- name: Start nginx
+  service: name=nginx state=started
