@@ -1,10 +1,8 @@
 - name: create {{ deploy }} user
   user: name={{ deploy }} comment="deploy user" generate_ssh_key=yes state=present password={{ password }} shell=/bin/bash
 
-- name: authorize my SSH key to access all users
-  authorized_key: user={{ item }} key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-  with_items:
-    - {{ deploy }}
+- name: authorize my SSH key to access {{ deploy }}
+  authorized_key: user={{ deploy }} key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
 - name: copy ssh_config so that github doesn't do host verification
   action: copy src=ssh_config dest=~{{ deploy }}/.ssh/config owner={{ deploy }} group={{ deploy }}

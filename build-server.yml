@@ -5,57 +5,32 @@
 # http://docs.ansible.com/playbooks_roles.html#roles
 
 
-# The following roles require 'sudo' and are executed as the 'vagrant' user.
-# This is a security risk!
-# Mitigation: Delete vagrant user after deploy. deploy user can still 'sudo', he just needs a password.
+### Bootstrap the {{ deploy }} user.
+### You must call this playbook with an admin user.
+### (The included Vagrantfile will use -u vagrant. For DigitalOcean, use -u root.)
 
 - hosts: all
   vars_files:
     - vars/defaults.yml
   sudo: True
+  # user: intentionally blank
   roles:
-    - { role: deploy-user, tags: ['deploy-user'] }
-    - { role: linux-prereqs, tags: ['linux-prereqs'] }
-    - { role: postgresql, tags: ['postgresql'] }
-
-# The following roles don't require 'sudo' and are executed as 'deploy'.
-# QUESTION: Isn't a bad idea to let 'deploy' run the application, if he has R/W access to binaries?
-# Shouldn't we have 'provision', 'deploy', and 'execute' users? Hmm...
-
-- hosts: all
-  vars_files:
-    - vars/defaults.yml
-  sudo: False
-  remote_user: "{{deploy}}"
-  roles:
-    - { role: rbenv, tags: ['rbenv'] }
-    - { role: ruby, tags: ['ruby'] }
-
-# Unfortunately we're hopping back and forth between root & deploy.
-# Now that we have rbenv installed (as deploy), set up passenger (as root).
-# If we install nginx before ruby, we'll have to restart the server at some far away point, which is messy.
-# Just do it in the right order in the first place.
-
-- hosts: all
-  vars_files:
-    - vars/defaults.yml
-  sudo: True
-  roles:
-    - { role: nginx-passenger, tags: ['nginx-passenger'] }
+    - { role: create-deploy-user, tags: ['create-deploy-user'] }
 
 
 - hosts: all
   vars_files:
     - vars/defaults.yml
     - vars/sampleapp.yml
-  sudo: False
-  remote_user: "{{deploy}}"
+  remote_user: {{ deploy }}
   roles:
+    ### Server provisioning roles:
+    - { role: purge-admin-accounts, tags: ['purge-admin-accounts'] }
+    - { role: linux-prereqs, tags: ['linux-prereqs'] }
+    - { role: postgresql, tags: ['postgresql'] }
+    - { role: rbenv, tags: ['rbenv'] }
+    - { role: ruby, tags: ['ruby'] }
+    - { role: nginx-passenger, tags: ['nginx-passenger'] }
+
+    ### Site specific roles:
     - { role: prepare_site_sampleapp, tags: ['prepare_site_sampleapp'] }
-
-
-# NOTE XXX BUG TODO:
-# Once we get rid of `vagrant` and have only `deploy`, then we can start
-# tagging individual tasks (e.g. apt) as sudo rather than through this
-# clunky multiple playbook approach. Then this file could be simplified.
-# (Though that approach *is* less DRY.)
