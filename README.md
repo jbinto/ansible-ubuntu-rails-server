@@ -27,17 +27,16 @@ Benefits to using something like Ansible to manage servers:
 * Executable documentation
 * Combined with cloud providers and hourly billing, can create on-demand staging environments
 
-## Usage
+## Usage (Vagrant)
 
 [Vagrant](http://www.vagrantup.com/downloads.html) must be installed from the website.
 
-Install Ansible and clone the repo.
+I'm currently retrieving Ansible from git, as well as the `dopy` module for DigitalOcean.
 
 ```
-brew install ansible
-
 git clone https://github.com/jbinto/ansible-ubuntu-rails-server.git
 cd ansible-ubuntu-rails-server
+sudo pip install -r requirements.txt
 ```
 
 Generate a crypted password, and put it in `vars/default.yml`.
@@ -66,6 +65,34 @@ ansible-playbook build-server.yml -i hosts --tags nginx
 ```
 
 Once the provision is complete, continue to [jbinto/rails4_sample_app_capistrano](https://github.com/jbinto/rails4_sample_app_capistrano) to deploy a Rails application using Capistrano.
+
+## Usage (DigitalOcean)
+
+Set up environemnt variables `DO_CLIENT_ID` and `DO_API_KEY`, or hardcode them in `./hosts/digital_ocean.ini`.
+
+Install `tugboat`:
+
+```
+gem install tugboat
+tugboat authorize
+```
+
+Edit `./vars/digitalocean.yml`. You can use `tugboat` to acquire the magic numbers needed for region/image/size IDs.
+
+```
+ansible-playbook -i local provision-digitalocean.yml
+```
+
+This will spin up a new DigitalOcean VPS **which costs real money**. At the end, it will tell you the new IP address of your server.
+
+* **Manually** add the IP address to `./hosts-digitalocean`.
+* **Manually** set your DNS as necessary with this new IP address. (**TODO use digital_ocean_domain module**)
+
+Now, run the playbook as usual. Good luck!
+
+```
+ansible-playbook build-server.yml -i hosts-digitalocean -u root -K -vvvv
+```
 
 ## Notes
 

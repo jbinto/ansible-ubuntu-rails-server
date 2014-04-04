@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  gather_facts: False
+
+  vars_files:
+    - vars/digitalocean.yml
+
+  roles:
+    - { role: digitalocean, tags: ['digitalocean'] }

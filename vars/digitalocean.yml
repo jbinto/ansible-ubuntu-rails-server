@@ -1,0 +1,22 @@
+# default_key is the numeric ID of the SSH keys attached to your DigitalOcean account.
+# (It is NOT an actual SSH key ID.)
+
+# To manage these DigitalOcean magic numbers you must install the `tugboat` gem.
+# This will make the API calls using your key.
+
+#    gem install tugboat
+#    tugboat authorize
+
+# Enter your client ID and API key.
+# You can accept all other defaults.
+# Then, do:
+
+#    tugboat keys
+
+default_key: 93562
+droplets:
+  - name: minefield.416.bike
+    region: 4        # tugboat regions -> "New York 2 (id: 4)"
+    size: 63         # tugboat sizes -> "1GB (id: 63)"
+    image: 1505447   # api.digitalocean.com/images/... -> "Ubuntu 12.04.3 x64"
+                     # tugboat images is empty. see https://gist.github.com/jbinto/9964452
