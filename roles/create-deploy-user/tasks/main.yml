@@ -20,19 +20,5 @@
   # note: 2755 => 2=setgid, 7=owner rwx, 5=group rx, 5=other rx
   file: name=~{{ deploy }}/apps state=directory owner={{ deploy }} group=www-data mode=2755
 
-## now that we have deploy, remove any other users with admin privileges
-
-# Vagrant
-
-- name: remove vagrant user
-  user: name=vagrant state=absent remove=yes
-
-- name: remove vboxadd user
-  user: name=vboxadd state=absent remove=yes
-
-# Upon droplet creation on DigitalOcean, your SSH key is installed to ~/.root.
-# We're only using the {{deploy}} user now.
-
-- name: remove authorized_keys from root
+- name: remove authorized_keys for root (specifically for DigitalOcean)
   file: name=/root/.ssh/authorized_keys state=absent
-

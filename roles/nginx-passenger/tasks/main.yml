@@ -15,18 +15,22 @@
 # See https://groups.google.com/forum/#!topic/ansible-project/8SEZWEQGTsg
 - name: Add Phusion Passenger repo key
   apt_key: url=http://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x561F9B9CAC40B2F7 state=present
+  sudo: yes
 
 - name: Install packages to enable apt over HTTPS
   action: apt pkg={{item}} state=installed update_cache=true
+  sudo: yes
   with_items:
     - apt-transport-https
     - ca-certificates
 
 - name: Add Phusion Passenger repo
   apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger precise main'
+  sudo: yes
 
 - name: Install nginx-extras and passenger
   action: apt pkg={{item}} state=installed update_cache=true
+  sudo: yes
   with_items:
     # note: Passenger repo has it's own nginx-extras package.
     - nginx-extras
@@ -34,9 +38,11 @@
 
 - name: Remove the default nginx app's config
   file: path=/etc/nginx/sites-available/default state=absent
+  sudo: yes
 
 - name: Remove the default nginx app's symlink if it exists
   file: path=/etc/nginx/sites-enabled/default state=absent
+  sudo: yes
 
 # Note: Will do this in Capistrano, for now.
 
@@ -48,6 +54,8 @@
 
 - name: Copy nginx.conf
   template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  sudo: yes
 
 - name: Start nginx
   service: name=nginx state=started
+  sudo: yes

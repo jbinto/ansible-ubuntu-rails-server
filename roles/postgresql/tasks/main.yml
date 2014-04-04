@@ -23,12 +23,15 @@
 # BUG: Is it secure to retrieve a PGP key over HTTP?
 - name: Add PostgreSQL repo key
   apt_key: url=http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
+  sudo: yes
 
 - name: Add PostgreSQL repo
   apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'
+  sudo: yes
 
 - name: Install postgresql, libpq-dev, python-psycopg2
   action: apt pkg={{item}} state=latest update_cache=true
+  sudo: yes
   with_items:
     - postgresql
     - libpq-dev
@@ -36,7 +39,9 @@
 
 - name: Copy valid pg_hba.conf
   template: src=pg_hba.conf.j2 dest=/etc/postgresql/9.3/main/pg_hba.conf
+  sudo: yes
 
 - name: Restart PostgreSQL
   # NOTE: If conf files were updated here, need to FORCE a RESTART!
   service: name=postgresql state=started
+  sudo: yes

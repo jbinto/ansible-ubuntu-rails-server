@@ -1,10 +1,10 @@
 ---
   # Unix user name to deploy as
-deploy: smithers
+deploy: geoffrey
 
 # Crypted password for 'deploy' Unix user.
 # To generate, use generate-crypted-password.py
-password: $6$rounds=100000$HhKvNPFq3nX8K7RN$yumvVIB9IA/VO2vRHvKojKgGMGs7//3t/4H4Bp3IINjeaHYGdIp9sVMeRwnRIMc3PmXGDFf3FwDRkGXSvR/Vm1
+password: $6$rounds=100000$IjJ.NeuYgJ/c.D7c$ZV8ANRn81G85GNlAs5/1iTgneQKYuGPqG0UlTx4VR9E/mPRjdBYG74JijrDuC3Qi8H5AyGJ9bdG4e/fffFyLR0
 
 # Ruby version to install
 ruby_version: 2.1.1
