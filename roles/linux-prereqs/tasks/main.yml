@@ -9,14 +9,10 @@
 - name: Upgrade existing linux packages
   apt: upgrade=dist
   sudo: yes
-  async: 300
-  poll: 15
 
 - name: Install ruby/postgres dependencies
   action: apt pkg={{item}} state=installed update_cache=true
   sudo: yes
-  async: 300
-  poll: 15
   with_items:
     - autoconf
     - automake
