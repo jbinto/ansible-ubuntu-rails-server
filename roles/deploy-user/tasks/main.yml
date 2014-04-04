@@ -3,6 +3,8 @@
 
 - name: authorize my SSH key to access all users
   authorized_key: user={{ item }} key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  # because vagrant doesn't exist on DO
+  ignore_errors: yes
   with_items:
     - vagrant
     - deploy
