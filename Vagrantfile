@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     web.vm.provision :ansible do |ansible|
       ansible.playbook = "build-server.yml"
-      ansible.inventory_path = "hosts"
+      ansible.inventory_path = "hosts-vagrant"
       ansible.verbose = "v"
       ansible.ask_sudo_pass = true
 
