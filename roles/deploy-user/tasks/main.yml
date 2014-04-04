@@ -1,23 +1,40 @@
-- name: create deploy user
-  user: name=deploy comment="deploy user" generate_ssh_key=yes state=present password={{password}} shell=/bin/bash
+- name: create {{ deploy }} user
+  user: name={{ deploy }} comment="deploy user" generate_ssh_key=yes state=present password={{ password }} shell=/bin/bash
 
 - name: authorize my SSH key to access all users
   authorized_key: user={{ item }} key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-  # because vagrant doesn't exist on DO
-  ignore_errors: yes
   with_items:
-    - vagrant
     - deploy
 
 - name: copy ssh_config so that github doesn't do host verification
-  action: copy src=ssh_config dest=~{{deploy}}/.ssh/config owner={{deploy}} group={{deploy}}
+  action: copy src=ssh_config dest=~{{ deploy }}/.ssh/config owner={{ deploy }} group={{ deploy }}
 
-- name: add deploy as NOPASSWD to sudoers
-  lineinfile: "dest=/etc/sudoers state=present line='{{deploy}} ALL=(ALL:ALL) NOPASSWD:ALL'"
+- name: add {{ deploy }} to sudoers
+  lineinfile: "dest=/etc/sudoers state=present line='{{ deploy }} ALL=(ALL:ALL) ALL'"
+
+- name: require password upon each invocation of sudo
+  lineinfile: "dest=/etc/sudoers state=present line='Defaults timestamp_timeout=0'"
 
 - name: create www-data group
   group: name=www-data state=present
 
-- name: create apps directory owned by deploy:www-data with setgid bit
+- name: create apps directory owned by {{ deploy }}:www-data with setgid bit
   # note: 2755 => 2=setgid, 7=owner rwx, 5=group rx, 5=other rx
-  file: name=~{{deploy}}/apps state=directory owner={{deploy}} group=www-data mode=2755
+  file: name=~{{ deploy }}/apps state=directory owner={{ deploy }} group=www-data mode=2755
+
+## now that we have deploy, remove any other users with admin privileges
+
+# Vagrant
+
+- name: remove vagrant user
+  user: name=vagrant state=absent remove=yes
+
+- name: remove vboxadd user
+  user: name=vboxadd state=absent remove=yes
+
+# Upon droplet creation on DigitalOcean, your SSH key is installed to ~/.root.
+# We're only using the {{deploy}} user now.
+
+- name: remove authorized_keys from root
+  file: name=/root/.ssh/authorized_keys state=absent
+
