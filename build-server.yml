@@ -26,6 +26,7 @@
   roles:
     ### Server provisioning roles:
     - { role: linux-prereqs, tags: ['linux-prereqs'] }
+    - { role: ufw, tags: ['ufw'] }
     - { role: postgresql, tags: ['postgresql'] }
     - { role: rbenv, tags: ['rbenv'] }
     - { role: ruby, tags: ['ruby'] }

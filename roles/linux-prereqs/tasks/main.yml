@@ -10,7 +10,7 @@
   apt: upgrade=dist
   sudo: yes
 
-- name: Install ruby/postgres dependencies
+- name: Install the kitchen sink
   action: apt pkg={{item}} state=installed update_cache=true
   sudo: yes
   with_items:
@@ -41,6 +41,19 @@
     - iftop
     - python-pycurl # for postgresql playbook, uses apt_pkg
     - python-software-properties # for `add-apt-repository` command
+    - fail2ban
+    - ufw
+    - unattended-upgrades
+
+- name: Disallow root SSH access
+  action: lineinfile dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
+  sudo: yes
+  notify: restart_sshd
+
+- name: Disallow password authentication
+  action: lineinfile dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
+  sudo: yes
+  notify: restart_sshd
 
 # Rails depends on a JS runtime.
 # Should move this to it's own role, eventually.
