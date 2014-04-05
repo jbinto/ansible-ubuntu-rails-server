@@ -155,18 +155,21 @@ I was defining `passenger_ruby` in my server-specific config, but forgetting `pa
 
 ## Things that still need fixing
 
-* Security: 5minbootstrap
-* Security: Get rid of vagrant user
-* Security: Analyze exactly why we need NOPASSWD. Capistrano symlink stuff maybe can be done in Ansible, and if cap needs sudo, could restrict it to particular commands.
-* Restart nginx automagically after deploys? Still have to ssh in and do it manually. Not sure why.
-* Asset precompilation using official capistrano method - this happens on remote server?
-* Deploy user still might still be hardcoded some places - try renaming it
-* Provision to DigitalOcean!
 * `ag BUG; ag NOTE`
-* Shouldn't have to SSH in to set postgres password in database.yml.
-* Only update the apt cache once every N. (60 minutes? 24 hours? What if we need to force it? -- easy, use a update_apt_cache handler on all things that need it, e.g. added repos)
+* Security: 5minbootstrap
+* Asset precompilation using official capistrano method - this happens on remote server?
 * Create a Vagrant Cloud box with some or all of the Ansible steps already completed.
 * The stages are a little muddy. The current example targets only `RAILS_ENV=production`, regardless of whether it's Vagrant (dev) or DigitalOcean (could be staging, could be prod). Can easily edit the role as needed, but need to devise a better overall strategy.
+
+## Fixed issues / answered questions
+
+* ~~Security: Get rid of vagrant user~~ **UPDATE:** This isn't necessary. I'm only ever running `vagrant` on my local machine, and that user is truly necessary for plumbing. We'll never pacakge the Vagrant image and deploy it to the cloud. We can assume a clean base (e.g. DigitalOcean).
+* ~~Security: Analyze exactly why we need NOPASSWD. Capistrano symlink stuff maybe can be done in Ansible, and if cap needs sudo, could restrict it to particular commands.~~ **UPDATE:** Fixed this by moving the symlinking, nginx stuff to Ansible, which is better suited for that anyway. Now, cap should be fine without sudo.
+* ~~Restart nginx automagically after deploys? Still have to ssh in and do it manually. Not sure why.~~ **UPDATE:** Fixed.
+* ~~Deploy user still might still be hardcoded some places - try renaming it~~ **done**
+* ~~Provision to DigitalOcean!~~ **done**
+* ~~Shouldn't have to SSH in to set postgres password in database.yml.~~ **done**
+* ~~Only update the apt cache once every N. (60 minutes? 24 hours? What if we need to force it? -- easy, use a update_apt_cache handler on all things that need it, e.g. added repos)~~ **done**
 
 ## Sources / references
 
