@@ -15,7 +15,7 @@
 
 default_key: 93562
 droplets:
-  - name: minefield.416.bike
+  - hostname: greenfield.416.bike  # used as DigitalOcean machine name, PTR record, and DNS entry
     region: 4        # tugboat regions -> "New York 2 (id: 4)"
     size: 63         # tugboat sizes -> "1GB (id: 63)"
     image: 1505447   # api.digitalocean.com/images/... -> "Ubuntu 12.04.3 x64"

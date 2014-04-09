@@ -1,5 +1,6 @@
 - name: Add papertrail destination to rsyslog.conf
   lineinfile: "dest=/etc/rsyslog.conf state=present line='*.* {{papertrail_log_dest}}'"
+  sudo: yes
 
 # TODO: Add logging of individual files using remote_syslog gem
 # See https://papertrailapp.com/systems/setup
