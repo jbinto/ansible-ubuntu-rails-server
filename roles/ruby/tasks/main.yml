@@ -11,10 +11,6 @@
 - name: rbenv install {{ ruby_version }}
   shell: cd; bash -lc "MAKEOPTS={{ rbenv_makeopts }} CONFIGURE_OPTS=--disable-install-rdoc rbenv install {{ ruby_version }}"
   when: ruby_is_installed.stdout != ruby_version
-  # Takes no more than 600 secs on a small VM
-  # See http://docs.ansible.com/playbooks_async.html
-  async: 600
-  poll: 30
 
 - name: set_global_ruby_version
   shell: cd; bash -lc "rbenv global {{ ruby_version }}"
