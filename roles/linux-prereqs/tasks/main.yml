@@ -55,6 +55,15 @@
   sudo: yes
   notify: restart_sshd
 
+- name: Allow unattended upgrades
+  copy: src=apt_periodic dest=/etc/apt/apt.conf.d/10periodic
+  sudo: yes
+
+- name: Configure unattended upgrades
+  copy: src=50unattended-upgrades dest=/etc/apt/apt.conf.d/50unattended-upgrades
+  sudo: yes
+
+
 # Rails depends on a JS runtime.
 # Should move this to it's own role, eventually.
 
