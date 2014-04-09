@@ -8,7 +8,11 @@
 * Postgresql 9.3
 * rbenv
 * ruby 2.1.1
-* Phusion Passenger + nginx from official apt repo
+* [Phusion Passenger](https://www.phusionpassenger.com/) + nginx from Phusion's apt repo
+* [Papertrail logging](https://papertrailapp.com/)
+* Prepares an nginx vhost for a Rails app, ready for deployment with `cap`
+
+It can be deployed locally using [Vagrant](http://www.vagrantup.com/) (i.e. for DEV environment), or in the cloud using [Digital Ocean](https://www.digitalocean.com/) (i.e. STAGING/PROD environments).
 
 ## Overview
 
@@ -77,7 +81,10 @@ gem install tugboat
 tugboat authorize
 ```
 
-Edit `./vars/digitalocean.yml`. You can use `tugboat` to acquire the magic numbers needed for region/image/size IDs.
+Edit `./vars/digitalocean.yml`. 
+
+* Note that `hostname` must be a real FQDN you own, and the DNS must be pointing to DigitalOcean.
+* You can use `tugboat` to acquire the magic numbers needed for region/image/size IDs.
 
 ```
 ansible-playbook -i local provision-digitalocean.yml
