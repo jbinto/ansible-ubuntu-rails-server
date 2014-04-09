@@ -30,6 +30,7 @@
     - { role: postgresql, tags: ['postgresql'] }
     - { role: rbenv, tags: ['rbenv'] }
     - { role: ruby, tags: ['ruby'] }
+    - { role: papertrail, tags: ['papertrail'] }
     - { role: nginx-passenger, tags: ['nginx-passenger'] }
 
     ### Site specific roles:

@@ -9,3 +9,7 @@ password: $6$rounds=100000$IjJ.NeuYgJ/c.D7c$ZV8ANRn81G85GNlAs5/1iTgneQKYuGPqG0Ul
 # Ruby version to install
 ruby_version: 2.1.1
 rbenv_makeopts: ""
+
+# Papertrail logging
+# e.g. @logs.papertrailapp.com:1234
+papertrail_log_dest: "@logs.papertrailapp.com:46606"
