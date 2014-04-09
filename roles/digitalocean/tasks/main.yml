@@ -23,29 +23,26 @@
   # OR OTHER DEALINGS IN THE SOFTWARE.
 
 ---
-- name: ensure droplet exists
+- name: Create droplet if not exists
   digital_ocean: >
       state=present
       ssh_key_ids={{ default_key }}
       command=droplet
-      name={{ item.hostname }}
-      size_id={{ item.size }}
-      region_id={{ item.region }}
-      image_id={{ item.image }}
+      name={{ droplet_hostname }}
+      size_id={{ droplet_size }}
+      region_id={{ droplet_region }}
+      image_id={{ droplet_image }}
       wait_timeout=500
       unique_name=true
-  register: droplet
-  with_items: droplets   ## XXX BUG this doesn't really work with >1 host
+  register: result
 
   # NOTE: re unique_name=true above:
   # Docs say this is useful for 'idempotency'.
   # Wouldn't that mean turning this *off* is useful?
   # We don't want it recreating the droplet with the same name.
 
-- debug: msg="new IP is {{ item.droplet.ip_address }}"
-  with_items: droplet.results
-
-- digital_ocean_domain: >
+- name: "Add DNS A record"
+  digital_ocean_domain: >
     state=present
-    name={{ hostname }}
-    ip={{ droplet.ip_address }}
+    name={{ droplet_hostname }}
+    ip={{ result.droplet.ip_address }}
