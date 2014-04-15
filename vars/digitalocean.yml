@@ -18,5 +18,4 @@ default_key: 93562
 droplet_hostname: greenfield.416.bike  # used as DigitalOcean machine name, PTR record, and DNS entry
 droplet_region: 4        # tugboat regions -> "New York 2 (id: 4)"
 droplet_size: 63         # tugboat sizes -> "1GB (id: 63)"
-droplet_image: 1505447   # api.digitalocean.com/images/... -> "Ubuntu 12.04.3 x64"
-                 # tugboat images is empty. see https://gist.github.com/jbinto/9964452
+droplet_image: 3101045   # tugboat images --global -> "Ubuntu 12.04.4 x64"
