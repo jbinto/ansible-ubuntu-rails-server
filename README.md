@@ -101,6 +101,8 @@ Now, run the playbook as usual. Good luck!
 ansible-playbook build-server.yml -i hosts-digitalocean -u root -K -vvvv
 ```
 
+Note that after the first run, `root` will no longer be able to log in. To run the playbook again, replace `root` with the `deploy` user as set in `vars/defaults.yml`.
+
 ## Notes
 
 * Vagrant ships with insecure defaults. Can log in to the VM with `vagrant/vagrant`, and there is an insecure SSH key. Need to destroy this stuff.
