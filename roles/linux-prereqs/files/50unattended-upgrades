@@ -13,7 +13,7 @@ Unattended-Upgrade::Allowed-Origins {
         "${distro_id}:${distro_codename}-backports";
 
         "apt.postgresql.org":"precise-pgdg";
-        "Phusion":"precise"
+        "Phusion":"precise";
 };
 
 Unattended-Upgrade::Automatic-Reboot "true";
