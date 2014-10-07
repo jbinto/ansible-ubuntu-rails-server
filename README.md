@@ -86,14 +86,23 @@ Edit `./vars/digitalocean.yml`.
 * Note that `hostname` must be a real FQDN you own, and the DNS must be pointing to DigitalOcean.
 * You can use `tugboat` to acquire the magic numbers needed for region/image/size IDs.
 
+Now you can provision the DigitalOcean droplet:
+
 ```
 ansible-playbook -i local provision-digitalocean.yml
 ```
 
-This will spin up a new DigitalOcean VPS **which costs real money**. At the end, it will tell you the new IP address of your server.
+This will spin up a new DigitalOcean VPS **which costs real money**. Since you set up the SSH keys with DigitalOcean, you already have passwordless `root` access.
+
+At the end, it should tell you the new IP address of your server (doesn't seem to be doing this anymore c. 10-2014).
 
 * **Manually** add the IP address to `./hosts-digitalocean`.
 * **Manually** set your DNS as necessary with this new IP address. (**TODO use digital_ocean_domain module**)
+* Generate a crypted password, if not already done, and put it in `vars/default.yml`. This will be the password for your `deploy` user.
+
+```
+python support/generate-crypted-password.py
+```
 
 Now, run the playbook as usual. Good luck!
 
