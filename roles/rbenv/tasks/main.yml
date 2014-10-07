@@ -1,7 +1,7 @@
 # Most of this borrowed from https://github.com/leucos/ansible-rbenv-playbook
 
 - name: Install rbenv
-  git: repo=git://github.com/sstephenson/rbenv.git dest=~{{deploy}}/.rbenv
+  git: repo=git://github.com/sstephenson/rbenv.git accept_hostkey=yes dest=~{{deploy}}/.rbenv
 
 - name: Create (if not exists) ~/.bash.d/
   file: dest=~{{deploy}}/.bash.d/ state=directory
