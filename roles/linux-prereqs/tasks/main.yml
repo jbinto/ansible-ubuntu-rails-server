@@ -68,7 +68,7 @@
 # Should move this to it's own role, eventually.
 
 - name: Node.js | Add the node.js PPA
-  action: command add-apt-repository -y ppa:chris-lea/node.js creates=/etc/apt/sources.list.d/chris-lea-node_js-precise.list
+  action: command add-apt-repository -y ppa:chris-lea/node.js creates=/etc/apt/sources.list.d/chris-lea-node_js-trusty.list
   sudo: yes
 
 - name: Node.js | Install nodejs and npm

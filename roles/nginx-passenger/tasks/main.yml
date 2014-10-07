@@ -2,14 +2,8 @@
 # http://www.modrails.com/documentation/Users%20guide%20Nginx.html
 
 
-# NOTE: Using the Phusion Passenger repo for nginx.
-
-#- name: Add the nginx PPA
-#  command: add-apt-repository -y ppa:nginx/stable creates=/etc/apt/source.list.d/nginx-stable-precise.list creates=/etc/apt/sources.list.d/nginx-stable-precise.list
-
-#- name: Install nginx
-#  apt: pkg=nginx state=latest update_cache=true
-
+# NOTE: Currently using the Phusion Passenger repo for nginx.
+# Was previously using official nginx/stable PPA.
 
 # Can't seem to use keyserver= apt_key feature here
 # See https://groups.google.com/forum/#!topic/ansible-project/8SEZWEQGTsg
@@ -25,7 +19,7 @@
     - ca-certificates
 
 - name: Add Phusion Passenger repo
-  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger precise main'
+  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main'
   sudo: yes
 
 - name: Install nginx-extras and passenger

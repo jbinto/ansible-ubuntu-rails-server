@@ -26,7 +26,7 @@
   sudo: yes
 
 - name: Add PostgreSQL repo
-  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main'
   sudo: yes
 
 - name: Install postgresql, libpq-dev, python-psycopg2
