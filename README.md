@@ -7,7 +7,7 @@
 * Ubuntu 14.04.1
 * Postgresql 9.3
 * rbenv
-* ruby 2.1.3
+* ruby 2.1.5
 * [Phusion Passenger](https://www.phusionpassenger.com/) + nginx from Phusion's apt repo
 * [Papertrail logging](https://papertrailapp.com/)
 * Prepares an nginx vhost for a Rails app, ready for deployment with `cap`
