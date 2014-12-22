@@ -40,6 +40,8 @@ I'm currently retrieving Ansible from git, as well as the `dopy` module for Digi
 ```
 git clone https://github.com/jbinto/ansible-ubuntu-rails-server.git
 cd ansible-ubuntu-rails-server
+brew install python
+sudo easy_install pip
 sudo pip install -r requirements.txt
 ```
 
@@ -81,7 +83,7 @@ gem install tugboat
 tugboat authorize
 ```
 
-Edit `./vars/digitalocean.yml`. 
+Edit `./vars/digitalocean.yml`.
 
 * Note that `hostname` must be a real FQDN you own, and the DNS must be pointing to DigitalOcean.
 * You can use `tugboat` to acquire the magic numbers needed for region/image/size IDs.
@@ -142,7 +144,7 @@ Note that after the first run, `root` will no longer be able to log in. To run t
 # clang: error: unknown argument: '-mno-fused-madd' [-Wunused-command-line-argument-hard-error-in-future]
 ```
 
-Run: 
+Run:
 
 ```
 echo "ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future" >> ~/.zshrc
